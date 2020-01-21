@@ -8,6 +8,23 @@ admin.initializeApp();
 
 const db = admin.firestore();
 
+const expTable = [
+  // Lv2に行くまでに必要な経験値
+  20,
+  // Lv3に行くまでに必要な経験値
+  40,
+  100,
+  250,
+  500,
+  1000,
+  1500,
+  4000,
+  10000
+
+];
+// ド定数なので全部大文字でもいい
+const EARN_EXPERIENCE = 10;
+
 export const gitHook = functions.https.onRequest(async (request, response) => {
   // // GitHubIdの実態が以下
   // console.log(request.body.sender.id);
@@ -18,10 +35,27 @@ export const gitHook = functions.https.onRequest(async (request, response) => {
   .where('ownerGitHubId', '==', request.body.sender.id)
   .get()
 
+  // 現状のpetのデータを取得する
+  const pet = pets.docs[0].data();
+
+  let level = 1;
+  expTable.some(nextExp => {
+    // 経験値がプラス10される前に判断してるので + 10を付け加えると正常な判断になる
+    if (pet.exp + EARN_EXPERIENCE > nextExp){
+      level++;
+      return false;
+    }else {
+      // ifでなければLv判断の処理を終わらせる
+      return true;
+    }
+  });
+
   //受け取った（既存の）値に10ずつ増やしていく
-  const increment = admin.firestore.FieldValue.increment(10);
+  const increment = admin.firestore.FieldValue.increment(EARN_EXPERIENCE);
   pets.docs.forEach(doc => doc.ref.update({
-    exp: increment
+    exp: increment,
+    // keyの名前と変数の名前が同じ場合は以下のように省略して書ける
+    level
   }));
   response.send('success');
 });
