@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Pet } from 'src/app/interfaces/pet';
+import { PetService } from 'src/app/services/pet.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { Observable } from 'rxjs';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -7,14 +10,14 @@ import { Pet } from 'src/app/interfaces/pet';
 })
 export class HomeComponent implements OnInit {
 
-  pet: Pet = {
-    name: 'テストペット',
-    exp: 200,
-    level: 4,
-    avatarURL: 'assets/images/pet-1.png'
-
-  };
-  constructor() { }
+  // Observableで帰ってくるのでpetの後ろに$をつける
+  pet$: Observable<Pet> = this.petService.getPet(
+    this.authService.uid
+  );
+  constructor(
+    private petService: PetService,
+    private authService: AuthService
+  ) { }
 
   ngOnInit() {
   }

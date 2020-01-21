@@ -1,3 +1,6 @@
 <div class="container">
-<app-pet [pet]="pet"></app-pet>
+  <!-- pet$ | asyncでhome.com.tsのpet$を取り出し、値があるのかないのかチェックする。
+  いた場合はngifがtrueになる。いない場合は表示しない。
+  いた場合は以後petという名前で扱えるようにする。 -->
+<app-pet *ngIf="pet$ | async as pet" [pet]="pet"></app-pet>
 </div>

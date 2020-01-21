@@ -1,6 +1,6 @@
 <h1>ペットを作る</h1>
 <div class="swiper">
-  <swiper [config]="config" [(index)]="selectedPedId">
+  <swiper [config]="config" [(index)]="selectedPetId">
     <div *ngFor="let petId of petIds">
       <img src="/assets/images/pet-{{ petId }}.png" alt="" />
     </div>

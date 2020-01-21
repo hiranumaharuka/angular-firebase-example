@@ -6,6 +6,7 @@ import { CompileShallowModuleMetadata } from '@angular/compiler';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+// このサービスがアプリのどこからでも使えるように
 @Injectable({
   providedIn: 'root'
 })
@@ -15,6 +16,7 @@ export class AuthService {
    * Observableはつねに最新の値が入ってくる箱
    */
   afUser$: Observable<User> = this.afAuth.user;
+  uid: string;
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -24,7 +26,12 @@ export class AuthService {
     /**
      * 受け取った値をconsole,logで表示する
      */
-    this.afUser$.subscribe(user => console.log(user));
+    this.afUser$.subscribe(user => {
+      // if文の省略形
+
+      this.uid = user && user.uid;
+
+    });
    }
 /**
  * GithubAuthProviderをgoogleとかfacebookに変えられる
@@ -39,6 +46,7 @@ export class AuthService {
       this.snackBar.open('ようこそGitPetへ', null, {
         duration: 2000
       });
+      this.router.navigateByUrl('/create');
     });
   }
 /**
