@@ -56,7 +56,9 @@ export class CreateComponent implements OnInit {
       petImageId: this.selectedPetId,
       level: 1,
       exp: 0,
-      trainerId: this.authService.uid
+      trainerId: this.authService.uid,
+      // petが作られる時点で作った人のgithubidが取得できる
+      ownerGitHubId: this.authService.gitHubId
     });
   }
 

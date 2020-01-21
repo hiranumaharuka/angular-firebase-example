@@ -17,6 +17,7 @@ export class AuthService {
    */
   afUser$: Observable<User> = this.afAuth.user;
   uid: string;
+  gitHubId: number;
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -27,8 +28,10 @@ export class AuthService {
      * 受け取った値をconsole,logで表示する
      */
     this.afUser$.subscribe(user => {
+      // ログインするたびに自分のGitHubidがauthserviceに乗ってくる
+      // 頭に+をつけると数字になる
+      this.gitHubId = +user.providerData[0].uid;
       // if文の省略形
-
       this.uid = user && user.uid;
 
     });
