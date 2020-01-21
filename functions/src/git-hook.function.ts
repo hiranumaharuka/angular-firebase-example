@@ -41,7 +41,7 @@ export const gitHook = functions.https.onRequest(async (request, response) => {
   let level = 1;
   expTable.some(nextExp => {
     // 経験値がプラス10される前に判断してるので + 10を付け加えると正常な判断になる
-    if (pet.exp + EARN_EXPERIENCE > nextExp){
+    if (pet.exp + EARN_EXPERIENCE >= nextExp){
       level++;
       return false;
     }else {
