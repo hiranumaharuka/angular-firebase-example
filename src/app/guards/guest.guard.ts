@@ -29,7 +29,14 @@ export class GuestGuard implements CanActivate, CanLoad {
     segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
       return this.authService.afUser$.pipe(
       map(user => !user),
-      take(1)
+      take(1),
+      // そもそもモジュールを読み込んでいいかジャッジしなかった場合canAvtivateが走らないので
+      // canLoadでもだめならリダイレクトするようにする
+      tap(isGuest => {
+        if (!isGuest) {
+          this.router.navigateByUrl('/');
+        }
+      })
     );
   }
 }

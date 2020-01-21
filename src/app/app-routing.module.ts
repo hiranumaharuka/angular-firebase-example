@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
 import { GuestGuard } from './guards/guest.guard';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 
 const routes: Routes = [
@@ -25,6 +26,12 @@ const routes: Routes = [
     loadChildren: () => import('./create/create.module').then(m => m.CreateModule),
     canLoad: [AuthGuard],
     canActivate: [AuthGuard]
+  },
+  {
+     // **はどのパスでもという意味
+    // routingは上からチェックする上からチェックしても見つからなかったということで404ページを作る
+    path: '**',
+    component: NotFoundComponent
   }
 ];
 
