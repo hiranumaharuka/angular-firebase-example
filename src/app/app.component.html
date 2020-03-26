@@ -3,6 +3,6 @@
 <footer>
   <!-- user$ | asyncは最新のuserを取り出す -->
   <!-- *ngifを入れることでログインしないとログアウトボタンは出ないようになる -->
-  <button *ngIf="user$ | async" (click)="logout()">ログアウト</button>
+  <button *ngIf="user$ | async" (click)="logout()" mat-button>ログアウト</button>
  <p>&copy; GitPet</p>
 </footer>
