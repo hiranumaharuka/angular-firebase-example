@@ -34,24 +34,24 @@ export class PetService {
     });
   }
   // 作成したペットのデータを取得する
-  getPet(trainerId: string): Observable<Pet> {
+  getPet(trainerId: string): Observable<Pet[]> {
     // dbにアクセス
     return this.db
     // dbの中のpet collectionにアクセス
     // trainerIdが渡されたtrainerIdであるペットにアクセスする
     .collection<Pet>('pets', ref => ref.where('trainerId', '==' , trainerId))
     // そのペットの数が増えるかもしれないしへるかもしれないので最新の値を撮ってくる
-    .valueChanges()
+    .valueChanges();
     // 1匹以上いるかをチェックする
     // 一体だけ取得する。いない場合はnullを返す
-    .pipe(
-      map(pets => {
-        if (pets.length) {
-          return pets[0];
-        } else {
-          return null;
-        }
-      })
-    );
+    // .pipe(
+    //   map(pets => {
+    //     if (pets.length) {
+    //       return pets[0];
+    //     } else {
+    //       return null;
+    //     }
+    //   })
+    // );
   }
 }

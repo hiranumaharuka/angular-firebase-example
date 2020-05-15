@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 export class HomeComponent implements OnInit {
 
   // Observableで帰ってくるのでpetの後ろに$をつける
-  pet$: Observable<Pet> = this.petService.getPet(
+  pet$: Observable<Pet[]> = this.petService.getPet(
     this.authService.uid
   );
   constructor(
