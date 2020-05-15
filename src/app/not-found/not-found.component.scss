@@ -1,0 +1,8 @@
+// :hostはnot-found.com.htmlの親にスタイルを適用させる。つまり全体にかかる
+:host {
+  text-align: center;
+}
+
+h1 {
+  margin: 40px 0;
+}
